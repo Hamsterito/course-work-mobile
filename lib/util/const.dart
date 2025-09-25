@@ -10,40 +10,46 @@ class Constants {
   static Color darkAccent = Color(0xff5563ff);
   static Color lightBG = Color(0xfffcfcff);
   static Color darkBG = Colors.black;
-  static Color ratingBG = Colors.yellow[600];
+  static Color ratingBG = const Color.fromARGB(255, 255, 208, 0);
 
   static ThemeData lightTheme = ThemeData(
-    backgroundColor: lightBG,
     primaryColor: lightPrimary,
-    accentColor: lightAccent,
-    cursorColor: lightAccent,
     scaffoldBackgroundColor: lightBG,
     appBarTheme: AppBarTheme(
-      textTheme: TextTheme(
+      toolbarTextStyle: TextTheme(
         headline6: TextStyle(
           color: darkBG,
           fontSize: 18.0,
           fontWeight: FontWeight.w800,
         ),
-      ),
-    ),
+      ).bodyText2, titleTextStyle: TextTheme(
+        headline6: TextStyle(
+          color: darkBG,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w800,
+        ),
+      ).headline6,
+    ), textSelectionTheme: TextSelectionThemeData(cursorColor: lightAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: lightAccent), colorScheme: ColorScheme(background: lightBG),
   );
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
-    backgroundColor: darkBG,
     primaryColor: darkPrimary,
-    accentColor: darkAccent,
     scaffoldBackgroundColor: darkBG,
-    cursorColor: darkAccent,
     appBarTheme: AppBarTheme(
-      textTheme: TextTheme(
+      toolbarTextStyle: TextTheme(
         headline6: TextStyle(
           color: lightBG,
           fontSize: 18.0,
           fontWeight: FontWeight.w800,
         ),
-      ),
-    ),
+      ).bodyText2, titleTextStyle: TextTheme(
+        headline6: TextStyle(
+          color: lightBG,
+          fontSize: 18.0,
+          fontWeight: FontWeight.w800,
+        ),
+      ).headline6,
+    ), textSelectionTheme: TextSelectionThemeData(cursorColor: darkAccent), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: darkAccent), colorScheme: ColorScheme(background: darkBG),
   );
 }

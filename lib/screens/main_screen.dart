@@ -12,7 +12,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  PageController _pageController;
+  late PageController _pageController;
   int _page = 0;
 
   List icons = [
@@ -32,47 +32,6 @@ class _MainScreenState extends State<MainScreen> {
   ];
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        onPageChanged: onPageChanged,
-        children: List.generate(5, (index) =>  pages[index] ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            // SizedBox(width: 7),
-            buildTabIcon(0),
-            buildTabIcon(1),
-            buildTabIcon(3),
-            buildTabIcon(4),
-            // SizedBox(width: 7),
-          ],
-        ),
-        color: Theme.of(context).primaryColor,
-        shape: CircularNotchedRectangle(),
-      ),
-      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        elevation: 10.0,
-        child: Icon(
-          Icons.add,
-        ),
-        onPressed: () => _pageController.jumpToPage(2),
-      ),
-    );
-  }
-
- // void navigationTapped(int page) {
- //    _pageController.jumpToPage(page);
- //  }
-
-  @override
   void initState() {
     super.initState();
     _pageController = PageController();
@@ -80,29 +39,58 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void dispose() {
-    super.dispose();
     _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: PageView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        onPageChanged: onPageChanged,
+        children: List.generate(5, (index) => pages[index]),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Theme.of(context).primaryColor,
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            buildTabIcon(0),
+            buildTabIcon(1),
+            buildTabIcon(3),
+            buildTabIcon(4),
+          ],
+        ),
+      ),
+      floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        elevation: 10.0,
+        child: Icon(Icons.add),
+        onPressed: () => _pageController.jumpToPage(2),
+      ),
+    );
   }
 
   void onPageChanged(int page) {
     setState(() {
-      this._page = page;
+      _page = page;
     });
   }
 
   buildTabIcon(int index) {
-      return Container(
-        margin: EdgeInsets.fromLTRB( index == 3 ? 30 : 0, 0,  index == 1 ? 30 : 0, 0),
-        child: IconButton(
-          icon: Icon(
-            icons[index],
-            size: 24.0,
-          ),
-          color: _page == index
-              ? Theme.of(context).accentColor
-              : Theme.of(context).textTheme.caption.color,
-          onPressed: () => _pageController.jumpToPage(index),
-        ),
-      );
+    return Container(
+      margin: EdgeInsets.fromLTRB(index == 3 ? 30 : 0, 0, index == 1 ? 30 : 0, 0),
+      child: IconButton(
+        icon: Icon(icons[index], size: 24.0),
+        color: _page == index
+            ? Theme.of(context).colorScheme.secondary
+            : Theme.of(context).textTheme.bodySmall?.color ?? Colors.grey,
+        onPressed: () => _pageController.jumpToPage(index),
+      ),
+    );
   }
 }

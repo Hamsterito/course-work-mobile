@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_foodybite/screens/categories.dart';
 import 'package:flutter_foodybite/screens/trending.dart';
@@ -14,9 +12,9 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
-        if(!currentFocus.hasPrimaryFocus){
+        if (!currentFocus.hasPrimaryFocus) {
           currentFocus.unfocus();
         }
       },
@@ -26,19 +24,19 @@ class Home extends StatelessWidget {
           child: ListView(
             children: <Widget>[
               buildSearchBar(context),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               buildRestaurantRow('Trending Restaurants', context),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               buildRestaurantList(context),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               buildCategoryRow('Category', context),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               buildCategoryList(context),
-              SizedBox(height: 20.0),
+              const SizedBox(height: 20.0),
               buildCategoryRow('Friends', context),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               buildFriendsList(),
-              SizedBox(height: 30.0),
+              const SizedBox(height: 30.0),
             ],
           ),
         ),
@@ -51,26 +49,24 @@ class Home extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
-          "$restaurant",
-          style: TextStyle(
+          restaurant,
+          style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.w800,
           ),
         ),
-        FlatButton(
+        TextButton(
           child: Text(
             "See all (9)",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return Trending();
-                },
+                builder: (BuildContext context) => Trending(),
               ),
             );
           },
@@ -84,26 +80,24 @@ class Home extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
-          "$category",
-          style: TextStyle(
+          category,
+          style: const TextStyle(
             fontSize: 20.0,
             fontWeight: FontWeight.w800,
           ),
         ),
-        FlatButton(
+        TextButton(
           child: Text(
             "See all (9)",
             style: TextStyle(
-              color: Theme.of(context).accentColor,
+              color: Theme.of(context).colorScheme.secondary,
             ),
           ),
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (BuildContext context) {
-                  return Categories();
-                },
+                builder: (BuildContext context) => Categories(),
               ),
             );
           },
@@ -114,42 +108,38 @@ class Home extends StatelessWidget {
 
   buildSearchBar(BuildContext context) {
     return Container(
-        margin: EdgeInsets.fromLTRB(10, 5, 10, 0),
-        child: SearchCard()
+      margin: const EdgeInsets.fromLTRB(10, 5, 10, 0),
+      child: SearchCard(),
     );
   }
 
   buildCategoryList(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height / 6,
       child: ListView.builder(
         primary: false,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemCount: categories == null ? 0 : categories.length,
+        itemCount: categories.length,
         itemBuilder: (BuildContext context, int index) {
           Map cat = categories[index];
-
-          return CategoryItem(
-            cat: cat,
-          );
+          return CategoryItem(cat: cat);
         },
       ),
     );
   }
 
   buildRestaurantList(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: MediaQuery.of(context).size.height / 2.4,
       width: MediaQuery.of(context).size.width,
       child: ListView.builder(
         primary: false,
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemCount: restaurants == null ? 0 : restaurants.length,
+        itemCount: restaurants.length,
         itemBuilder: (BuildContext context, int index) {
           Map restaurant = restaurants[index];
-
           return Padding(
             padding: const EdgeInsets.only(right: 10.0),
             child: SlideItem(
@@ -165,22 +155,19 @@ class Home extends StatelessWidget {
   }
 
   buildFriendsList() {
-    return Container(
+    return SizedBox(
       height: 50.0,
       child: ListView.builder(
         primary: false,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        itemCount: friends == null ? 0 : friends.length,
+        itemCount: friends.length,
         itemBuilder: (BuildContext context, int index) {
           String img = friends[index];
-
           return Padding(
             padding: const EdgeInsets.only(right: 5.0),
             child: CircleAvatar(
-              backgroundImage: AssetImage(
-                img,
-              ),
+              backgroundImage: AssetImage(img),
               radius: 25.0,
             ),
           );
